@@ -10,6 +10,9 @@ void ArraySortBubble(int array[], int size);
 void ArraySortShacker(int array[], int size);
 void ArraySortInsert(int array[], int size);
 
+int ArraySearchLinear(int array[], int size, int key);
+int ArraySearchBinary(int array[], int size, int key);
+
 int main()
 {
     const int size{ 10 };
@@ -122,4 +125,40 @@ void ArraySortInsert(int array[], int size)
                 break;
         array[index] = temp;
     }
+}
+
+int ArraySearchLinear(int array[], int size, int key)
+{
+    int index{ -1 };
+    for (int i = 0; i < size; i++)
+        if (array[i] == key)
+        {
+            index = i;
+            break;
+        }
+    return index;
+}
+
+int ArraySearchBinary(int array[], int size, int key)
+{
+    int index{ -1 };
+
+    int left{ 0 };
+    int right{ size - 1 };
+
+    while (left <= right)
+    {
+        int middle{ (left + right) / 2 };
+        if (array[middle] == key)
+        {
+            index = middle;
+            break;
+        }
+
+        if (key < array[middle])
+            right = middle - 1;
+        else
+            left = middle + 1;
+    }
+    return index;
 }
