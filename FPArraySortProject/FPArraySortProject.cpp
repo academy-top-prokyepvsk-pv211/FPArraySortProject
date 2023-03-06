@@ -13,6 +13,8 @@ void ArraySortInsert(int array[], int size);
 int ArraySearchLinear(int array[], int size, int key);
 int ArraySearchBinary(int array[], int size, int key);
 
+void Swap(int& a, int& b);
+
 int main()
 {
     const int size{ 10 };
@@ -30,6 +32,13 @@ int main()
     ArrayPrint(array, size);
 
     return 0;
+}
+
+void Swap(int& a, int& b)
+{
+    int temp = a;
+    a = b;
+    b = temp;
 }
 
 void ArrayPrint(int array[], int size)
@@ -54,9 +63,10 @@ void ArraySortSelect(int array[], int size)
         for (int j = i + 1; j < size; j++)
             if (array[j] < array[indexMin])
                 indexMin = j;
-        int temp = array[i];
+        Swap(array[i], array[indexMin]);
+        /*int temp = array[i];
         array[i] = array[indexMin];
-        array[indexMin] = temp;
+        array[indexMin] = temp;*/
     }
 }
 
@@ -68,9 +78,10 @@ void ArraySortBubble(int array[], int size)
         for (int j = size - 1; j > i; j--)
             if (array[j] < array[j - 1])
             {
-                int temp = array[j];
+                Swap(array[j], array[j - 1]);
+                /*int temp = array[j];
                 array[j] = array[j - 1];
-                array[j - 1] = temp;
+                array[j - 1] = temp;*/
                 isSort = false;
             }
         if (isSort)
@@ -90,9 +101,10 @@ void ArraySortShacker(int array[], int size)
         for (int i = bottom; i > top; i--)
             if (array[i] < array[i - 1])
             {
-                int temp = array[i];
+                Swap(array[i], array[i - 1]);
+                /*int temp = array[i];
                 array[i] = array[i - 1];
-                array[i - 1] = temp;
+                array[i - 1] = temp;*/
                 isSort = false;
             }
         if (isSort) break;
@@ -102,9 +114,10 @@ void ArraySortShacker(int array[], int size)
         for (int i = top; i < bottom; i++)
             if (array[i] > array[i + 1])
             {
-                int temp = array[i];
+                Swap(array[i], array[i + 1]);
+                /*int temp = array[i];
                 array[i] = array[i + 1];
-                array[i + 1] = temp;
+                array[i + 1] = temp;*/
                 isSort = false;
             }
         if (isSort) break;
