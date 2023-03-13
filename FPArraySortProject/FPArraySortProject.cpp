@@ -10,14 +10,28 @@ void ArraySortBubble(int array[], int size);
 void ArraySortShacker(int array[], int size);
 void ArraySortInsert(int array[], int size);
 
+template <typename T>
+void ArraySortComb(T array[], int size);
+
+template <typename T>
+void ArraySortShell(T array[], int size);
+
+template <typename T>
+void ArraySortQuick(T array[], int size);
+
+template <typename T>
+void QuickSortReq(T array[], int begin, int end);
+
 int ArraySearchLinear(int array[], int size, int key);
 int ArraySearchBinary(int array[], int size, int key);
 
-void Swap(int& a, int& b);
+
+template <typename T>
+void Swap(T& a, T& b);
 
 int main()
 {
-    const int size{ 10 };
+    const int size{ 20 };
     int array[size];
 
     ArrayInit(array, size);
@@ -26,7 +40,9 @@ int main()
     //ArraySortSelect(array, size);
     //ArraySortBubble(array, size);
 
-    
+    //ArraySortComb(array, size);
+    //ArraySortShell(array, size);
+    ArraySortQuick(array, size);
 
 
     ArrayPrint(array, size);
@@ -34,9 +50,10 @@ int main()
     return 0;
 }
 
-void Swap(int& a, int& b)
+template <typename T>
+void Swap(T& a, T& b)
 {
-    int temp = a;
+    T temp = a;
     a = b;
     b = temp;
 }
@@ -174,4 +191,58 @@ int ArraySearchBinary(int array[], int size, int key)
             left = middle + 1;
     }
     return index;
+}
+
+template <typename T>
+void ArraySortComb(T array[], int size)
+{
+    const double FACTOR{ 1.2473309 };
+    int step = size - 1;
+
+    while (step >= 1)
+    {
+        for (int i = 0; i + step < size; i++)
+            if (array[i] > array[i + step])
+                Swap(array[i], array[i + step]);
+        step /= FACTOR;
+    }
+}
+
+template <typename T>
+void ArraySortShell(T array[], int size)
+{
+    for (int step = size / 2; step > 0; step /= 2)
+        for (int i = step; i < size; i++)
+            for (int j = i - step; j >= 0; j -= step)
+                if (array[j] > array[j + step])
+                    Swap(array[j], array[j + step]);
+
+}
+
+template <typename T>
+void ArraySortQuick(T array[], int size)
+{
+    QuickSortReq(array, 0, size - 1);
+}
+
+template <typename T>
+void QuickSortReq(T array[], int begin, int end)
+{
+    T pivot = array[(begin + end) / 2];
+    int left = begin;
+    int right = end;
+
+    do
+    {
+        while (array[left] < pivot) left++;
+        while (array[right] > pivot) right--;
+        if (left <= right)
+        {
+            Swap(array[left], array[right]);
+            left++;
+            right--;
+        }
+    } while (left <= right);
+    if (begin < right) QuickSortReq(array, begin, right);
+    if (left < end) QuickSortReq(array, left, end);
 }
